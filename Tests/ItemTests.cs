@@ -27,18 +27,18 @@ namespace Inventory
 
       Assert.Equal(firstItem, secondItem);
     }
-    //
-    // [Fact]
-    // public void Test_Save_SavesToDatabase()
-    // {
-    //   Item testItem = new Item("Mow the lawn", 1);
-    //
-    //   testItem.Save();
-    //   List<Item> result = Item.GetAll();
-    //   List<Item> testList = new List<Item>{testItem};
-    //   Assert.Equal(testList, result);
-    // }
-    //
+
+    [Fact]
+    public void Test_Save_SavesToDatabase()
+    {
+      Item testItem = new Item("Long sword", 2, 5, 1);
+
+      testItem.Save();
+      List<Item> result = Item.GetAll();
+      List<Item> testList = new List<Item>{testItem};
+      Assert.Equal(testList, result);
+    }
+
     // [Fact]
     // public void Test_Save_AssignsIdToObject()
     // {

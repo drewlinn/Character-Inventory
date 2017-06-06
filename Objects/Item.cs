@@ -156,7 +156,7 @@ namespace Inventory
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM Items WHERE id = @ItemId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM items WHERE id = @ItemId;", conn);
       SqlParameter ItemIdParameter = new SqlParameter();
       ItemIdParameter.ParameterName = "@ItemId";
       ItemIdParameter.Value = id.ToString();
