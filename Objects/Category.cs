@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System;
 
-namespace Inventory
+namespace Inventory.Objects
 {
   public class Category
   {
@@ -167,6 +167,10 @@ namespace Inventory
         int ItemCategoryId = rdr.GetInt32(4);
         Item newItem = new Item(ItemName, ItemSizeId, ItemWeight, ItemCategoryId, ItemId);
         items.Add(newItem);
+      }
+      foreach(Item item in items)
+      {
+        Console.WriteLine("Result Item: {0}, SizeId: {1}, weight: {2}, catId: {3}, id: {4}", item.GetName(), item.GetSizeId(), item.GetWeight(), item.GetCategoryId(), item.GetId());
       }
       if(rdr != null)
       {

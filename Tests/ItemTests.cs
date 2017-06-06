@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using Inventory.Objects;
 
 namespace Inventory
 {
-  public class ToDoTest : IDisposable
+  public class InventoryTest : IDisposable
   {
-    // string testString = "Hello World.";
-    public ToDoTest()
+    public InventoryTest()
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=inventory_items_test;Integrated Security=SSPI;";
     }
@@ -18,7 +18,7 @@ namespace Inventory
     {
       int result = Item.GetAll().Count;
       Assert.Equal(0, result);
-      // Console.WriteLine(testString);
+      // Console.WriteLine(this.testString);
     }
 
     [Fact]
@@ -41,19 +41,19 @@ namespace Inventory
       Assert.Equal(testList, result);
     }
 
-    [Fact]
-    public void Test_Save_AssignsIdToObject()
-    {
-      Item testItem = new Item("Great Helm", 1, 3, 2);
-
-      testItem.Save();
-      Item savedItem = Item.GetAll()[0];
-
-      int result = savedItem.GetId();
-      int testId = testItem.GetId();
-
-      Assert.Equal(testId, result);
-    }
+    // [Fact]
+    // public void Test_Save_AssignsIdToObject()
+    // {
+    //   Item testItem = new Item("Great Helm", 1, 3, 2);
+    //
+    //   testItem.Save();
+    //   Item savedItem = Item.GetAll()[0];
+    //
+    //   int result = savedItem.GetId();
+    //   int testId = testItem.GetId();
+    //
+    //   Assert.Equal(testId, result);
+    // }
 
     [Fact]
     public void Test_Find_FindsItemInDatabase()

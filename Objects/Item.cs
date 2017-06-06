@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System;
 
-namespace Inventory
+namespace Inventory.Objects
 {
   public class Item
   {
