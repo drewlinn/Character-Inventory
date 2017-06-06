@@ -39,6 +39,34 @@ namespace Inventory
         return (nameEquality && idEquality && categoryEquality && weightEquality && sizeEquality);
       }
     }
+    public string GetSizeString()
+    {
+      if (this._sizeId == 1)
+      {
+        return "small";
+      }
+      if (this._sizeId == 2)
+      {
+        return "medium";
+      }
+      if (this._sizeId == 3)
+      {
+        return "large";
+      }
+      return "Invalid ID!";
+    }
+    public string GetCategoryString()
+    {
+      if (this._categoryId == 1)
+      {
+        return "weapon";
+      }
+      if (this._categoryId == 2)
+      {
+        return "armor";
+      }
+      return "Invalid ID!";
+    }
 
     public int GetId()
     {

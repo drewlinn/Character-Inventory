@@ -8,6 +8,7 @@ namespace Inventory
 {
   public class ToDoTest : IDisposable
   {
+    // string testString = "Hello World.";
     public ToDoTest()
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=inventory_items_test;Integrated Security=SSPI;";
@@ -17,6 +18,7 @@ namespace Inventory
     {
       int result = Item.GetAll().Count;
       Assert.Equal(0, result);
+      // Console.WriteLine(testString);
     }
 
     [Fact]
@@ -39,30 +41,30 @@ namespace Inventory
       Assert.Equal(testList, result);
     }
 
-    // [Fact]
-    // public void Test_Save_AssignsIdToObject()
-    // {
-    //   Item testItem = new Item("Mow the lawn", 1);
-    //
-    //   testItem.Save();
-    //   Item savedItem = Item.GetAll()[0];
-    //
-    //   int result = savedItem.GetId();
-    //   int testId = testItem.GetId();
-    //
-    //   Assert.Equal(testId, result);
-    // }
-    //
-    // [Fact]
-    // public void Test_Find_FindsItemInDatabase()
-    // {
-    //   Item testItem = new Item("Do the dishes", 1);
-    //   testItem.Save();
-    //
-    //   Item foundItem = Item.Find(testItem.GetId());
-    //
-    //   Assert.Equal(testItem, foundItem);
-    // }
+    [Fact]
+    public void Test_Save_AssignsIdToObject()
+    {
+      Item testItem = new Item("Great Helm", 1, 3, 2);
+
+      testItem.Save();
+      Item savedItem = Item.GetAll()[0];
+
+      int result = savedItem.GetId();
+      int testId = testItem.GetId();
+
+      Assert.Equal(testId, result);
+    }
+
+    [Fact]
+    public void Test_Find_FindsItemInDatabase()
+    {
+      Item testItem = new Item("Plate Mail", 3, 15, 2);
+      testItem.Save();
+
+      Item foundItem = Item.Find(testItem.GetId());
+
+      Assert.Equal(testItem, foundItem);
+    }
     public void Dispose()
     {
       Item.DeleteAll();
