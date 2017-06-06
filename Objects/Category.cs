@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System;
 
-namespace ToDoList
+namespace Inventory
 {
   public class Category
   {
@@ -145,26 +145,28 @@ namespace ToDoList
       return foundCategory;
     }
 
-    public List<Task> GetTasks()
+    public List<Item> GetItems()
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM tasks WHERE category_id = @CategoryId;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM items WHERE category_id = @CategoryId;", conn);
       SqlParameter categoryIdParameter = new SqlParameter();
       categoryIdParameter.ParameterName = "@CategoryId";
       categoryIdParameter.Value = this.GetId();
       cmd.Parameters.Add(categoryIdParameter);
       SqlDataReader rdr = cmd.ExecuteReader();
 
-      List<Task> tasks = new List<Task> {};
+      List<Item> items = new List<Item> {};
       while(rdr.Read())
       {
-        int taskId = rdr.GetInt32(0);
-        string taskDescription = rdr.GetString(1);
-        int taskCategoryId = rdr.GetInt32(2);
-        Task newTask = new Task(taskDescription, taskCategoryId, taskId);
-        tasks.Add(newTask);
+        int ItemId = rdr.GetInt32(0);
+        string ItemName = rdr.GetString(1);
+        int ItemSizeId = rdr.GetInt32(2);
+        int ItemWeight = rdr.GetInt32(3);
+        int ItemCategoryId = rdr.GetInt32(4);
+        Item newItem = new Item(ItemName, ItemSizeId, ItemWeight, ItemCategoryId, ItemId);
+        items.Add(newItem);
       }
       if(rdr != null)
       {
@@ -174,7 +176,7 @@ namespace ToDoList
       {
         conn.Close();
       }
-      return tasks;
+      return items;
     }
   }
 }

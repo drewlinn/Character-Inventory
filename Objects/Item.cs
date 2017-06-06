@@ -8,14 +8,18 @@ namespace Inventory
   public class Item
   {
     private int _id;
-    private string _description;
+    private string _name;
+    private int _sizeId;
+    private int _weight;
     private int _categoryId;
 
-    public Item(string Description,int CategoryId, int Id = 0)
+    public Item(string Name, int SizeId, int Weight, int CategoryId, int Id = 0)
     {
-      _description = Description;
-      _categoryId = CategoryId;
       _id = Id;
+      _name = Name;
+      _sizeId = SizeId;
+      _weight = Weight;
+      _categoryId = CategoryId;
     }
 
     public override bool Equals(System.Object otherItem)
@@ -28,9 +32,11 @@ namespace Inventory
       {
         Item newItem = (Item) otherItem;
         bool idEquality = (this.GetId() == newItem.GetId());
-        bool descriptionEquality = (this.GetDescription() == newItem.GetDescription());
+        bool nameEquality = (this.GetName() == newItem.GetName());
         bool categoryEquality = (this.GetCategoryId() == newItem.GetCategoryId());
-        return (descriptionEquality && idEquality && categoryEquality);
+        bool weightEquality = (this.GetWeight() == newItem.GetWeight());
+        bool sizeEquality = (this.GetSizeId() == newItem.GetSizeId());
+        return (nameEquality && idEquality && categoryEquality && weightEquality && sizeEquality);
       }
     }
 
@@ -46,13 +52,29 @@ namespace Inventory
     {
       _categoryId = newCategoryId;
     }
-    public string GetDescription()
+    public string GetName()
     {
-      return _description;
+      return _name;
     }
-    public void SetDescription(string newDescription)
+    public void SetName(string newName)
     {
-      _description = newDescription;
+      _name = newName;
+    }
+    public int GetWeight()
+    {
+      return _weight;
+    }
+    public void SetWeight(int newWeight)
+    {
+      _weight = newWeight;
+    }
+    public int GetSizeId()
+    {
+      return _sizeId;
+    }
+    public void SetSizeId(int newSizeId)
+    {
+      _sizeId = newSizeId;
     }
     public static List<Item> GetAll()
     {
@@ -61,15 +83,17 @@ namespace Inventory
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM Items;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM items;", conn);
       SqlDataReader rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
       {
         int ItemId = rdr.GetInt32(0);
-        string ItemDescription = rdr.GetString(1);
-        int ItemCategoryId = rdr.GetInt32(2);
-        Item newItem = new Item(ItemDescription, ItemCategoryId, ItemId);
+        string ItemName = rdr.GetString(1);
+        int ItemSizeId = rdr.GetInt32(2);
+        int ItemWeight = rdr.GetInt32(3);
+        int ItemCategoryId = rdr.GetInt32(4);
+        Item newItem = new Item(ItemName, ItemSizeId, ItemWeight, ItemCategoryId, ItemId);
         AllItems.Add(newItem);
       }
       if (rdr != null)
@@ -88,17 +112,27 @@ namespace Inventory
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO Items (description, category_id) OUTPUT INSERTED.id VALUES (@ItemDescription, @ItemCategoryId);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO items (name, size_id, weight, category_id) OUTPUT INSERTED.id VALUES (@ItemName, @ItemSizeId, @ItemWeight,  @ItemCategoryId);", conn);
 
-      SqlParameter descriptionParameter = new SqlParameter();
-      descriptionParameter.ParameterName = "@ItemDescription";
-      descriptionParameter.Value = this.GetDescription();
+      SqlParameter nameParameter = new SqlParameter();
+      nameParameter.ParameterName = "@ItemName";
+      nameParameter.Value = this.GetName();
+
+      SqlParameter sizeIdParameter = new SqlParameter();
+      sizeIdParameter.ParameterName = "@ItemSizeId";
+      sizeIdParameter.Value = this.GetSizeId();
+
+      SqlParameter weightParameter = new SqlParameter();
+      weightParameter.ParameterName = "@ItemWeight";
+      weightParameter.Value = this.GetWeight();
 
       SqlParameter categoryIdParameter =  new SqlParameter();
       categoryIdParameter.ParameterName = "@ItemCategoryId";
       categoryIdParameter.Value = this.GetCategoryId();
 
-      cmd.Parameters.Add(descriptionParameter);
+      cmd.Parameters.Add(nameParameter);
+      cmd.Parameters.Add(sizeIdParameter);
+      cmd.Parameters.Add(weightParameter);
       cmd.Parameters.Add(categoryIdParameter);
 
       SqlDataReader rdr = cmd.ExecuteReader();
@@ -129,17 +163,21 @@ namespace Inventory
       cmd.Parameters.Add(ItemIdParameter);
       SqlDataReader rdr = cmd.ExecuteReader();
 
-      int foundItemId = 0;
-      string foundItemDescription = null;
-      int foundItemCategoryId = 0;
+      int foundId = 0;
+      string foundName = null;
+      int foundSizeId = 0;
+      int foundWeight = 0;
+      int foundCategoryId = 0;
 
       while(rdr.Read())
       {
-        foundItemId = rdr.GetInt32(0);
-        foundItemDescription = rdr.GetString(1);
-        foundItemCategoryId = rdr.GetInt32(2);
+        foundId = rdr.GetInt32(0);
+        foundName = rdr.GetString(1);
+        foundSizeId = rdr.GetInt32(2);
+        foundWeight = rdr.GetInt32(3);
+        foundCategoryId = rdr.GetInt32(4);
       }
-      Item foundItem = new Item(foundItemDescription, foundItemCategoryId, foundItemId);
+      Item foundItem = new Item(foundName, foundSizeId, foundWeight, foundCategoryId, foundId);
 
       if(rdr != null)
       {
@@ -157,7 +195,7 @@ namespace Inventory
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
-      SqlCommand cmd = new SqlCommand("DELETE FROM Items;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM items;", conn);
       cmd.ExecuteNonQuery();
       conn.Close();
     }
