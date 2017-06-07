@@ -1,1 +1,14 @@
-<p>Hello World!</p>
+@if(@Model != null)
+{
+  <ul>
+      @foreach (var item in Model)
+      {
+      <li>@item.GetName</li>
+      <ul>
+        <li>@item.GetSizeString()</li>
+        <li>@item.GetWeight()</li>
+        <li>@item.GetCategoryString()</li>
+      </ul>
+      }
+  </ul>
+}
