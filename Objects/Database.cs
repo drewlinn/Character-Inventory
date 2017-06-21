@@ -1,7 +1,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Inventory.Objects
+namespace CharacterInventory.Objects
 {
   public class DB
   {

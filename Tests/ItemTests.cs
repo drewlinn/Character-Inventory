@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using Inventory.Objects;
+using CharacterInventory.Objects;
 
-namespace Inventory
+namespace CharacterInventory
 {
-  public class InventoryTest : IDisposable
+  [Collection("CharacterInventory")]
+  public class InventoryItemTest : IDisposable
   {
-    public InventoryTest()
+    public InventoryItemTest()
     {
-      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=inventory_items_test;Integrated Security=SSPI;";
+      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=character_inventory_test;Integrated Security=SSPI;";
     }
     [Fact]
     public void Test_DatabaseEmptyAtFirst()
@@ -41,19 +42,19 @@ namespace Inventory
       Assert.Equal(testList, result);
     }
 
-    // [Fact]
-    // public void Test_Save_AssignsIdToObject()
-    // {
-    //   Item testItem = new Item("Great Helm", 1, 3, 2);
-    //
-    //   testItem.Save();
-    //   Item savedItem = Item.GetAll()[0];
-    //
-    //   int result = savedItem.GetId();
-    //   int testId = testItem.GetId();
-    //
-    //   Assert.Equal(testId, result);
-    // }
+    [Fact]
+    public void Test_Save_AssignsIdToObject()
+    {
+      Item testItem = new Item("Great Helm", 1, 3, 2);
+
+      testItem.Save();
+      Item savedItem = Item.GetAll()[0];
+
+      int result = savedItem.GetId();
+      int testId = testItem.GetId();
+
+      Assert.Equal(testId, result);
+    }
 
     [Fact]
     public void Test_Find_FindsItemInDatabase()

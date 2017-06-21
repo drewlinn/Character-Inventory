@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using Inventory.Objects;
+using CharacterInventory.Objects;
 
-namespace Inventory
+namespace CharacterInventory
 {
-  public class CategoryTest : IDisposable
+  [Collection("CharacterInventory")]
+  public class ItemCategoryTest : IDisposable
   {
-    public CategoryTest()
+    public ItemCategoryTest()
     {
-      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=inventory_items_test;Integrated Security=SSPI;";
+      DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=character_inventory_test;Integrated Security=SSPI;";
     }
 
     [Fact]

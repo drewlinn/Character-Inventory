@@ -7,7 +7,7 @@ using Nancy.Owin;
 using Nancy.ViewEngines.Razor;
 using System.Data.SqlClient;
 
-namespace Inventory
+namespace CharacterInventory
 {
   public class Startup
   {
@@ -40,6 +40,6 @@ namespace Inventory
   }
   public static class DBConfiguration
   {
-    public static string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=inventory_items;Integrated Security=SSPI;";
+    public static string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=character_inventory;Integrated Security=SSPI;";
   }
 }

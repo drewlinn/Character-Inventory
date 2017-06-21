@@ -1,8 +1,8 @@
 using Nancy;
-using Inventory.Objects;
+using CharacterInventory.Objects;
 using System.Collections.Generic;
 
-namespace Inventory
+namespace CharacterInventory
 {
   public class HomeModule : NancyModule
   {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System;
 
-namespace Inventory.Objects
+namespace CharacterInventory.Objects
 {
   public class Category
   {
