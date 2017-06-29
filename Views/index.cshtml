@@ -1,14 +1,5 @@
-@if(@Model != null)
-{
-  <ul>
-      @foreach (var item in Model)
-      {
-      <li>@item.GetName</li>
-      <ul>
-        <li>@item.GetSizeString()</li>
-        <li>@item.GetWeight()</li>
-        <li>@item.GetCategoryString()</li>
-      </ul>
-      }
-  </ul>
-}
+<h1>Your Inventory</h1>
+
+<p><a href="/inventory">View Your Inventory</a>
+<p><a href="/items">View All Items</a> | <a href="/item/new">Add a new Item</a></p>
+<p><a href="/categories">View All Item Categories</a> | <a href="/category/new">Add a new Item Category</a></p>
